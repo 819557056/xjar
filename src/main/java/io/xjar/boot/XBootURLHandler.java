@@ -4,7 +4,7 @@ import io.xjar.XConstants;
 import io.xjar.XDecryptor;
 import io.xjar.XEncryptor;
 import io.xjar.key.XKey;
-import org.springframework.boot.loader.jar.Handler;
+import org.springframework.boot.loader.net.protocol.jar.Handler;
 
 import java.io.IOException;
 import java.io.InputStream;

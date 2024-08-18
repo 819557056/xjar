@@ -29,9 +29,11 @@ public class XBootEncryptor extends XEntryEncryptor<JarArchiveEntry> implements 
     private final Map<String, String> map = new HashMap<>();
 
     {
-        final String jarLauncher = "org.springframework.boot.loader.JarLauncher";
+//        final String jarLauncher = "org.springframework.boot.loader.JarLauncher";
+        final String jarLauncher = "org.springframework.boot.loader.launch.JarLauncher";
         final String warLauncher = "org.springframework.boot.loader.WarLauncher";
         final String extLauncher = "org.springframework.boot.loader.PropertiesLauncher";
+//        map.put(jarLauncher, "io.xjar.boot.XJarLauncher");
         map.put(jarLauncher, "io.xjar.boot.XJarLauncher");
         map.put(warLauncher, "io.xjar.boot.XWarLauncher");
         map.put(extLauncher, "io.xjar.boot.XExtLauncher");

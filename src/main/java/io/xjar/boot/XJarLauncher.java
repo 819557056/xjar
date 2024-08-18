@@ -1,9 +1,11 @@
 package io.xjar.boot;
 
 import io.xjar.XLauncher;
-import org.springframework.boot.loader.JarLauncher;
+import org.springframework.boot.loader.launch.Archive;
+import org.springframework.boot.loader.launch.ExecutableArchiveLauncher;
 
 import java.net.URL;
+import java.util.Collection;
 
 /**
  * Spring-Boot Jar 启动器
@@ -11,7 +13,7 @@ import java.net.URL;
  * @author Payne 646742615@qq.com
  * 2018/11/23 23:06
  */
-public class XJarLauncher extends JarLauncher {
+public class XJarLauncher extends ExecutableArchiveLauncher {
     private final XLauncher xLauncher;
 
     public XJarLauncher(String... args) throws Exception {
@@ -27,8 +29,24 @@ public class XJarLauncher extends JarLauncher {
     }
 
     @Override
-    protected ClassLoader createClassLoader(URL[] urls) throws Exception {
-        return new XBootClassLoader(urls, this.getClass().getClassLoader(), xLauncher.xDecryptor, xLauncher.xEncryptor, xLauncher.xKey);
+    protected ClassLoader createClassLoader(Collection<URL> urls) throws Exception {
+        URL[] urlArray = urls.toArray(new URL[0]);
+        return new XBootClassLoader(urlArray, this.getClass().getClassLoader(), xLauncher.xDecryptor, xLauncher.xEncryptor, xLauncher.xKey);
     }
 
+
+    @Override
+    protected boolean isIncludedOnClassPath(Archive.Entry entry) {
+        return isLibraryFileOrClassesDirectory(entry);
+    }
+
+    static boolean isLibraryFileOrClassesDirectory(Archive.Entry entry) {
+        String name = entry.name();
+        return entry.isDirectory() ? name.equals("BOOT-INF/classes/") : name.startsWith("BOOT-INF/lib/");
+    }
+
+    @Override
+    protected String getEntryPathPrefix() {
+            return "BOOT-INF/";
+    }
 }
