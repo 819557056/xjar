@@ -1,5 +1,20 @@
 # XJar [![](https://jitpack.io/v/core-lib/xjar.svg)](https://jitpack.io/#core-lib/xjar)
-GitHub: https://github.com/core-lib/xjar
+原项目地址，GitHub: https://github.com/core-lib/xjar
+
+在原项目基础上进行程序修改，用于在JDK17+Springboot3.3.2环境上对Jar包加密运行。
+## 环境依赖
+JDK 17
+Springboot3.3.2
+
+使用需要加上3条命令
+--add-opens java.base/jdk.internal.loader=ALL-UNNAMED
+--add-opens java.base/java.net=ALL-UNNAMED
+--add-opens java.base/java.lang=ALL-UNNAMED
+# 示例
+.\xjar.exe java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED -jar .\test-jar-enc.jar
+
+# 下方介绍为原项目介绍。
+
 ### Spring Boot JAR 安全加密运行工具, 同时支持的原生JAR.
 ### 基于对JAR包内资源的加密以及拓展ClassLoader来构建的一套程序加密启动, 动态解密运行的方案, 避免源码泄露以及反编译.
 
@@ -11,8 +26,7 @@ GitHub: https://github.com/core-lib/xjar
 * 支持Maven插件, 加密更加便捷.
 * 动态生成Go启动器, 保护密码不泄露.
 
-## 环境依赖
-JDK 1.7 +
+
 
 ## 使用步骤
 
