@@ -6,7 +6,6 @@ import io.xjar.XKit;
 import io.xjar.key.XKey;
 import io.xjar.reflection.XReflection;
 import org.springframework.boot.loader.launch.LaunchedClassLoader;
-import org.springframework.boot.loader.net.protocol.jar.JarUrlClassLoader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,7 +24,7 @@ import java.util.Enumeration;
  * @author Payne 646742615@qq.com
  * 2018/11/23 23:04
  */
-public class XBootClassLoader extends JarUrlClassLoader {
+public class XBootClassLoader extends LaunchedClassLoader {
     private final XBootURLHandler xBootURLHandler;
     private final Object urlClassPath;
     private final Method getResource;
@@ -37,7 +36,7 @@ public class XBootClassLoader extends JarUrlClassLoader {
     }
 
     public XBootClassLoader(URL[] urls, ClassLoader parent, XDecryptor xDecryptor, XEncryptor xEncryptor, XKey xKey) throws Exception {
-        super(urls, parent);
+        super(true, urls, parent);
         this.xBootURLHandler = new XBootURLHandler(xDecryptor, xEncryptor, xKey, this);
         this.urlClassPath = XReflection.field(URLClassLoader.class, "ucp").get(this).value();
         this.getResource = XReflection.method(urlClassPath.getClass(), "getResource", String.class).method();
@@ -67,10 +66,10 @@ public class XBootClassLoader extends JarUrlClassLoader {
         return new XBootEnumeration(enumeration);
     }
 
-    @Override
-    protected Class<?> findClass(String name) throws ClassNotFoundException {
+
+    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         try {
-            return super.findClass(name);
+            return super.loadClass(name,resolve);
         } catch (ClassFormatError e) {
             String path = name.replace('.', '/').concat(".class");
             URL url = findResource(path);

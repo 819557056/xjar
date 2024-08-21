@@ -18,11 +18,18 @@ public class XLauncher implements XConstants {
 
     public XLauncher(String... args) throws Exception {
         this.args = args;
-        Scanner scanner = new Scanner(System.in);
-        String algorithm = scanner.nextLine();
-        int keysize = Integer.parseInt(scanner.nextLine());
-        int ivsize = Integer.parseInt(scanner.nextLine());
-        String password = scanner.nextLine();
+//        Scanner scanner = new Scanner(System.in);
+//        String algorithm = scanner.nextLine();
+//        int keysize = Integer.parseInt(scanner.nextLine());
+//        int ivsize = Integer.parseInt(scanner.nextLine());
+//        String password = scanner.nextLine();
+
+        //TODO: debug测试，临时写死
+        String algorithm = "AES/CBC/PKCS5Padding";
+        int keysize = 128;
+        int ivsize = 128;
+        String password = "sjfadfare3adfadf";
+
         this.xDecryptor = new XJdkDecryptor();
         this.xEncryptor = new XJdkEncryptor();
         this.xKey = XKit.key(algorithm, keysize, ivsize, password);
