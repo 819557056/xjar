@@ -47,6 +47,6 @@ public class XJarLauncher extends ExecutableArchiveLauncher {
 
     @Override
     protected String getEntryPathPrefix() {
-            return "BOOT-INF/";
+        return "BOOT-INF/";
     }
 }
