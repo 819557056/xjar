@@ -4,9 +4,7 @@ import io.xjar.XDecryptor;
 import io.xjar.XEncryptor;
 import io.xjar.key.XKey;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -157,7 +155,10 @@ public class XBootURLConnection extends JarURLConnection {
     @Override
     public InputStream getInputStream() throws IOException {
         InputStream in = jarURLConnection.getInputStream();
-        return xDecryptor.decrypt(xKey, in);
+        InputStream is = xDecryptor.decrypt(xKey, in);
+        File file = new File("/persistent/disk/workspace/001-java/003-work/packing/xjar/class/" + this.getEntryName());
+
+        return is;
     }
 
     @Override
